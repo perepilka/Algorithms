@@ -216,12 +216,6 @@ start:
         }
 
         case 2: {
-            // data_type = DataType::INT;
-            //
-            // int_vec = DataGenerator::load<int>("../data/input/int/test.txt");
-            // Helper::print_vec(int_vec);
-
-
             std::cout << "Jaki jest typ danych?\n"
                     "1. int\n"
                     "2. float\n"
@@ -245,7 +239,7 @@ start:
                 case DataType::INT:
                     try {
                         int_vec = DataGenerator::load<int>("../data/input/int/" + path);
-                    } catch (const std::runtime_error& e) {
+                    } catch (const std::runtime_error &e) {
                         std::cout << "Pliku o nazwie: " << path << " nie istnieje! Sproboj ponownie!";
                         goto filename;
                     }
@@ -253,7 +247,7 @@ start:
                 case DataType::FLOAT:
                     try {
                         float_vec = DataGenerator::load<float>("../data/input/float/" + path);
-                    } catch (const std::runtime_error& e) {
+                    } catch (const std::runtime_error &e) {
                         std::cout << "Pliku o nazwie: " << path << " nie istnieje! Sproboj ponownie!";
                         goto filename;
                     }
@@ -261,7 +255,7 @@ start:
                 case DataType::CHAR:
                     try {
                         char_vec = DataGenerator::load<char>("../data/input/char/" + path);
-                    } catch (const std::runtime_error& e) {
+                    } catch (const std::runtime_error &e) {
                         std::cout << "Pliku o nazwie: " << path << " nie istnieje! Sproboj ponownie!";
                         goto filename;
                     }

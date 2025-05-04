@@ -9,14 +9,11 @@
 
 class QuickSort {
 private:
-
-
-
     /**
      * Quicksort algorithm (driver).
      */
-    template <typename Comparable>
-    static void insertionSort(std::vector<Comparable> & vec, int left, int right) {
+    template<typename Comparable>
+    static void insertionSort(std::vector<Comparable> &vec, int left, int right) {
         for (int i = left + 1; i <= right; ++i) {
             Comparable tmp = std::move(vec[i]);
             int j = i;
@@ -32,8 +29,8 @@ private:
  * Return median of left, center, and right.
  * Order these and hide the pivot.
  */
-    template <typename Comparable>
-    static const Comparable & median3(std::vector<Comparable> & vec, int left, int right) {
+    template<typename Comparable>
+    static const Comparable &median3(std::vector<Comparable> &vec, int left, int right) {
         int center = (left + right) / 2;
 
         if (vec[center] < vec[left])
@@ -55,17 +52,19 @@ private:
      * left is the left-most index of the subarray.
      * right is the right-most index of the subarray.
      */
-    template <typename Comparable>
-    static void quicksort(std::vector<Comparable> & vec, int left, int right) {
+    template<typename Comparable>
+    static void quicksort(std::vector<Comparable> &vec, int left, int right) {
         const int CUTOFF = 10;
 
         if (left + CUTOFF <= right) {
-            const Comparable & pivot = median3(vec, left, right);
+            const Comparable &pivot = median3(vec, left, right);
 
             int i = left, j = right - 1;
             for (;;) {
-                while (vec[++i] < pivot) {}
-                while (pivot < vec[--j]) {}
+                while (vec[++i] < pivot) {
+                }
+                while (pivot < vec[--j]) {
+                }
                 if (i < j)
                     std::swap(vec[i], vec[j]);
                 else
@@ -80,21 +79,17 @@ private:
             // insertionSort(vec, left, right);
             InsertionSort::insertionSort(vec);
         }
-
     }
-public:
 
+public:
     /**
  * Insertion sort routine for subarrays.
  */
-    template <typename Comparable>
-    static void quicksort(std::vector<Comparable> & vec) {
+    template<typename Comparable>
+    static void quicksort(std::vector<Comparable> &vec) {
         quicksort(vec, 0, vec.size() - 1);
     }
-
-
 };
-
 
 
 #endif //QUICKSORT_H

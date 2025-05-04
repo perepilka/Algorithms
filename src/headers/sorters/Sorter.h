@@ -29,7 +29,7 @@ public:
 
                 timer.timer_start();
                 InsertionSort::insertionSort(vec);
-                std::cout << "Insertion Sort: czas sortowania " << vec.size() <<  " elementow: " << std::to_string(
+                std::cout << "Insertion Sort: czas sortowania " << vec.size() << " elementow: " << std::to_string(
                     timer.timer_stop()) + "\n";
 
                 break;
@@ -37,8 +37,9 @@ public:
 
                 timer.timer_start();
                 BinaryInsertionSort::binaryInsertionSort(vec);
-                std::cout << "Binary Insertion Sort: czas sortowania " << vec.size() << "elementow : " << std::to_string(
-                    timer.timer_stop()) + "\n";
+                std::cout << "Binary Insertion Sort: czas sortowania " << vec.size() << "elementow : " <<
+                        std::to_string(
+                            timer.timer_stop()) + "\n";
             case SortType::QuickSort:
                 timer.timer_start();
                 QuickSort::quicksort(vec);

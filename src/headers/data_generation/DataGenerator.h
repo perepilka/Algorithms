@@ -13,11 +13,9 @@
 #include <fstream>
 
 class DataGenerator {
-  public:
-
-
-    template <typename Type>
-    static std::vector<Type>  generate(size_t size, ArrayTypes array_type) {
+public:
+    template<typename Type>
+    static std::vector<Type> generate(size_t size, ArrayTypes array_type) {
         std::vector<Type> vec;
         vec.reserve(size);
 
@@ -28,7 +26,7 @@ class DataGenerator {
         // type = FLOAT
         if constexpr (std::is_floating_point_v<Type>) {
             std::uniform_real_distribution<Type> dist(0.0f, 10000.0f);
-            for(size_t i = 0; i < size; ++i){
+            for (size_t i = 0; i < size; ++i) {
                 vec.push_back(dist(gen));
             }
         }
@@ -40,35 +38,35 @@ class DataGenerator {
             }
         }
         // type = INT
-        if constexpr (std::is_integral_v<Type> && !std::is_same_v<Type, bool> && !std::is_same_v<Type, char>){
+        if constexpr (std::is_integral_v<Type> && !std::is_same_v<Type, bool> && !std::is_same_v<Type, char>) {
             std::uniform_int_distribution<int> dist(0, 10000);
-            for(size_t i = 0; i < size; ++i){
+            for (size_t i = 0; i < size; ++i) {
                 vec.push_back(dist(gen));
             }
         }
 
 
-        switch(array_type){
-            case ArrayTypes::RANDOM:{
+        switch (array_type) {
+            case ArrayTypes::RANDOM: {
                 break;
             }
-            case ArrayTypes::SORTED:{
+            case ArrayTypes::SORTED: {
                 std::sort(vec.begin(), vec.end());
                 break;
             }
-            case ArrayTypes::REVERSE_SORTED:{
+            case ArrayTypes::REVERSE_SORTED: {
                 std::sort(vec.rbegin(), vec.rend());
                 break;
             }
-            case ArrayTypes::PARTIALLY_SORTED_33:{
+            case ArrayTypes::PARTIALLY_SORTED_33: {
                 if (size >= 3) {
-                    std::sort(vec.begin(), vec.begin() + size/3);
+                    std::sort(vec.begin(), vec.begin() + size / 3);
                 }
                 break;
             }
-            case ArrayTypes::PARTIALLY_SORTED_66:{
+            case ArrayTypes::PARTIALLY_SORTED_66: {
                 if (size >= 3) {
-                    std::sort(vec.begin(), vec.begin() + 2*size/3);
+                    std::sort(vec.begin(), vec.begin() + 2 * size / 3);
                 }
                 break;
             }
@@ -76,8 +74,9 @@ class DataGenerator {
 
         return vec;
     }
-    template <typename Type>
-    static void save(std::vector<Type> & vec, const std::string & filename) {
+
+    template<typename Type>
+    static void save(std::vector<Type> &vec, const std::string &filename) {
         std::ofstream outFile(filename);
         if (!outFile) {
             std::cerr << "Error file opening: " << filename << std::endl;
@@ -85,17 +84,16 @@ class DataGenerator {
         }
 
         outFile << vec.size() << '\n'; // перший рядок — розмір вектора
-        for (const auto& value : vec) {
+        for (const auto &value: vec) {
             outFile << value << '\n'; // кожне значення з нового рядка
         }
 
         outFile.close();
         std::cout << "Vector zapisany do pliku: " << filename << std::endl;
-
-
     }
-    template <typename Type>
-    static std::vector<Type>  load(std::string path) {
+
+    template<typename Type>
+    static std::vector<Type> load(std::string path) {
         std::ifstream file(path);
         std::vector<Type> result;
 
@@ -113,16 +111,8 @@ class DataGenerator {
 
         file.close();
         return result;
-
-
-
     }
-
-
-
 };
-
-
 
 
 #endif //DATAGENERATOR_H
