@@ -10,8 +10,6 @@ std::vector<float> float_vec;
 std::vector<char> char_vec;
 
 
-
-
 int main() {
     int x;
 start:
@@ -47,11 +45,11 @@ start:
                     break;
                 case 2:
                     data_type = DataType::FLOAT;
-                run_information += "Wybrany typ danych: float\n";
+                    run_information += "Wybrany typ danych: float\n";
                     break;
                 case 3:
                     data_type = DataType::CHAR;
-                run_information += "Wybrany typ danych: char\n";
+                    run_information += "Wybrany typ danych: char\n";
                     break;
                 default:
                     std::cout << "Wybrano zly typ danych.\n";;
@@ -72,23 +70,23 @@ start:
             switch (array_choice) {
                 case 1:
                     array_type = ArrayTypes::RANDOM;
-                run_information += "Wybrany typ tablicy: random\n";
+                    run_information += "Wybrany typ tablicy: random\n";
                     break;
                 case 2:
                     array_type = ArrayTypes::SORTED;
-                run_information += "Wybrany typ tablicy: sorted\n";
+                    run_information += "Wybrany typ tablicy: sorted\n";
                     break;
                 case 3:
                     array_type = ArrayTypes::REVERSE_SORTED;
-                run_information += "Wybrany typ tablicy: reverse sort\n";
+                    run_information += "Wybrany typ tablicy: reverse sort\n";
                     break;
                 case 4:
                     array_type = ArrayTypes::PARTIALLY_SORTED_33;
-                run_information += "Wybrany typ tablicy: partially sorted 33%\n";
+                    run_information += "Wybrany typ tablicy: partially sorted 33%\n";
                     break;
                 case 5:
                     array_type = ArrayTypes::PARTIALLY_SORTED_66;
-                run_information += "Wybrany typ tablicy: partially sorted 66%\n";
+                    run_information += "Wybrany typ tablicy: partially sorted 66%\n";
                     break;
                 default:
                     std::cout << "Wybrano zly typ tablicy\n";
@@ -138,8 +136,7 @@ start:
                         break;
                 }
                 run_information += "Dane wejsciowe zapisane do pliku o nazwie: " + path + "\n";
-            }
-            else run_information += "Dane wejsciowe nie zapisane\n";
+            } else run_information += "Dane wejsciowe nie zapisane\n";
             // Sorter<char>::sort(char_vec, SortType::QuickSort);
             // Helper::print_vec<char>(char_vec);
 
@@ -155,29 +152,60 @@ start:
                 case 1:
                     run_information += "Insertion sort\n";
                     sort_type = SortType::InsertionSort;
-                break;
+                    break;
                 case 2:
                     run_information += "Binary insertion sort\n";
                     sort_type = SortType::BinaryInsertionSort;
-                break;
+                    break;
                 case 3:
                     run_information += "Heap sort\n";
                     sort_type = SortType::HeapSort;
-                break;
+                    break;
                 case 4:
                     run_information += "Quick sort\n";
                     sort_type = SortType::QuickSort;
-                break;
+                    break;
                 case 5:
                     goto skip;
                 default:
                     std::cout << "Niepoprawna opcja sortowania.\n";
-                goto skip;
+                    goto skip;
             }
             std::cout << run_information;
             Helper::sort(int_vec, float_vec, char_vec, sort_type, data_type);
             std::cout << "____________________________\n";
-            Helper::print_vec<int>(int_vec);
+            std::cout << "Wypisac posortowana tablice?\n"
+                    "1. Tak\n"
+                    "2. Nie\n";
+            std::cin >> x;
+            if (x == 1) {
+                Helper::print_vec<int>(int_vec);
+            }
+            std::cout << "\nCzy chcesz zapisac do pliku?\n"
+                    "1. Tak\n"
+                    "2. Nie\n";
+            std::cin >> x;
+
+            if (x == 1) {
+                std::cout << "Napisz nazwe pliku: ";
+                std::string path;
+                std::cin >> path;
+                switch (data_type) {
+                    case DataType::INT:
+                        path = "../data/output/int/" + path;
+                        DataGenerator::save(int_vec, path);
+                        break;
+                    case DataType::FLOAT:
+                        path = "../data/output/float/" + path;
+                        DataGenerator::save(float_vec, path);
+                        break;
+                    case DataType::CHAR:
+                        path = "../data/output/char/" + path;
+                        DataGenerator::save(char_vec, path);
+                        break;
+                }
+            }
+
 
         skip:
             goto start;
