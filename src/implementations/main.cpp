@@ -3,7 +3,7 @@
 #include <string>
 #include <../headers/data_generation/DataGenerator.h>
 #include <../headers/utils/Helper.h>
-// #include <../headers/sorters/Sorter.h>
+
 
 std::vector<int> int_vec;
 std::vector<float> float_vec;
@@ -15,6 +15,7 @@ std::vector<char> char_vec;
 int main() {
     int x;
 start:
+    std::string run_information = "_________Inforamcja symulacji___________\n";
 
     std::cout << "Wybierz opcje: \n"
             "1. Generacja nowych dannych \n"
@@ -27,9 +28,12 @@ start:
     switch (x) {
         choosing:
         case 1: {
+            run_information += "Generacja nowych dannych \n";
             size_t size;
             std::cout << "Wybierz ilosc elementow do generacji: ";
             std::cin >> size;
+
+            run_information += "Liczba elementow: " + std::to_string(size) + "\n";
 
 
             std::cout << "Wybierz typ dannych do generacji: \n"
@@ -39,16 +43,19 @@ start:
             switch (x) {
                 case 1:
                     data_type = DataType::INT;
+                    run_information += "Wybrany typ danych: int\n";
                     break;
                 case 2:
                     data_type = DataType::FLOAT;
+                run_information += "Wybrany typ danych: float\n";
                     break;
                 case 3:
                     data_type = DataType::CHAR;
+                run_information += "Wybrany typ danych: char\n";
                     break;
                 default:
-                    std::cout << "Wybrano zly typ danych.\n";
-                    goto choosing;
+                    std::cout << "Wybrano zly typ danych.\n";;
+                    goto start;
             }
 
             int array_choice;
@@ -65,22 +72,27 @@ start:
             switch (array_choice) {
                 case 1:
                     array_type = ArrayTypes::RANDOM;
+                run_information += "Wybrany typ tablicy: random\n";
                     break;
                 case 2:
                     array_type = ArrayTypes::SORTED;
+                run_information += "Wybrany typ tablicy: sorted\n";
                     break;
                 case 3:
                     array_type = ArrayTypes::REVERSE_SORTED;
+                run_information += "Wybrany typ tablicy: reverse sort\n";
                     break;
                 case 4:
                     array_type = ArrayTypes::PARTIALLY_SORTED_33;
+                run_information += "Wybrany typ tablicy: partially sorted 33%\n";
                     break;
                 case 5:
                     array_type = ArrayTypes::PARTIALLY_SORTED_66;
+                run_information += "Wybrany typ tablicy: partially sorted 66%\n";
                     break;
                 default:
                     std::cout << "Wybrano zly typ tablicy\n";
-                    goto choosing;
+                    goto start;
             }
 
             std::cout << "Generacja...\n";
@@ -100,7 +112,7 @@ start:
                     break;
                 default:
                     std::cout << "Wybrano zly typ danych.\n";
-                    goto choosing;
+                    goto start;
             }
             std::cout << "\nCzy chcesz zapisac do pliku?\n"
                     "1. Tak\n"
@@ -113,16 +125,21 @@ start:
                 std::cin >> path;
                 switch (data_type) {
                     case DataType::INT:
-                        DataGenerator::save(int_vec, "../data/input/int/" + path);
+                        path = "../data/input/int/" + path;
+                        DataGenerator::save(int_vec, path);
                         break;
                     case DataType::FLOAT:
-                        DataGenerator::save(float_vec, "../data/input/float/" + path);
+                        path = "../data/input/float/" + path;
+                        DataGenerator::save(float_vec, path);
                         break;
                     case DataType::CHAR:
-                        DataGenerator::save(char_vec, "../data/input/char/" + path);
+                        path = "../data/input/char/" + path;
+                        DataGenerator::save(char_vec, path);
                         break;
                 }
+                run_information += "Dane wejsciowe zapisane do pliku o nazwie: " + path + "\n";
             }
+            else run_information += "Dane wejsciowe nie zapisane\n";
             // Sorter<char>::sort(char_vec, SortType::QuickSort);
             // Helper::print_vec<char>(char_vec);
 
@@ -136,15 +153,19 @@ start:
             SortType sort_type;
             switch (x) {
                 case 1:
+                    run_information += "Insertion sort\n";
                     sort_type = SortType::InsertionSort;
                 break;
                 case 2:
+                    run_information += "Binary insertion sort\n";
                     sort_type = SortType::BinaryInsertionSort;
                 break;
                 case 3:
+                    run_information += "Heap sort\n";
                     sort_type = SortType::HeapSort;
                 break;
                 case 4:
+                    run_information += "Quick sort\n";
                     sort_type = SortType::QuickSort;
                 break;
                 case 5:
@@ -153,8 +174,9 @@ start:
                     std::cout << "Niepoprawna opcja sortowania.\n";
                 goto skip;
             }
-
+            std::cout << run_information;
             Helper::sort(int_vec, float_vec, char_vec, sort_type, data_type);
+            std::cout << "____________________________\n";
             Helper::print_vec<int>(int_vec);
 
         skip:
