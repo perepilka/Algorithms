@@ -3,11 +3,13 @@
 #include <string>
 #include <../headers/data_generation/DataGenerator.h>
 #include <../headers/utils/Helper.h>
-#include <../headers/sorters/Sorter.h>
+// #include <../headers/sorters/Sorter.h>
 
 std::vector<int> int_vec;
 std::vector<float> float_vec;
 std::vector<char> char_vec;
+
+
 
 
 int main() {
@@ -29,12 +31,12 @@ start:
             std::cout << "Wybierz ilosc elementow do generacji: ";
             std::cin >> size;
 
-            int type;
+
             std::cout << "Wybierz typ dannych do generacji: \n"
                     "1. int\n2. float\n3. char\n";
-            std::cin >> type;
+            std::cin >> x;
             DataType data_type;
-            switch (type) {
+            switch (x) {
                 case 1:
                     data_type = DataType::INT;
                     break;
@@ -83,16 +85,16 @@ start:
 
             std::cout << "Generacja...\n";
 
-            switch (type) {
-                case 1:
+            switch (data_type) {
+                case DataType::INT:
                     int_vec = DataGenerator::generate<int>(size, array_type);
                     Helper::print_vec<int>(int_vec);
                     break;
-                case 2:
+                case DataType::FLOAT:
                     float_vec = DataGenerator::generate<float>(size, array_type);
                     Helper::print_vec<float>(float_vec);
                     break;
-                case 3:
+                case DataType::CHAR:
                     char_vec = DataGenerator::generate<char>(size, array_type);
                     Helper::print_vec<char>(char_vec);
                     break;
@@ -109,22 +111,53 @@ start:
                 std::cout << "Napisz nazwe pliku: ";
                 std::string path;
                 std::cin >> path;
-                switch (type) {
-                    case 1:
+                switch (data_type) {
+                    case DataType::INT:
                         DataGenerator::save(int_vec, "../data/input/int/" + path);
                         break;
-                    case 2:
+                    case DataType::FLOAT:
                         DataGenerator::save(float_vec, "../data/input/float/" + path);
                         break;
-                    case 3:
+                    case DataType::CHAR:
                         DataGenerator::save(char_vec, "../data/input/char/" + path);
                         break;
                 }
             }
-            Sorter<char>::sort(char_vec, SortType::QuickSort);
-            Helper::print_vec<char>(char_vec);
+            // Sorter<char>::sort(char_vec, SortType::QuickSort);
+            // Helper::print_vec<char>(char_vec);
 
+            std::cout << "Posortowac:\n"
+                    "1. Insertion sort\n"
+                    "2. Binary insertion sort\n"
+                    "3. Heap sort\n"
+                    "4. Quick sort\n"
+                    "5. Nie sortowac\n";
+            std::cin >> x;
+            SortType sort_type;
+            switch (x) {
+                case 1:
+                    sort_type = SortType::InsertionSort;
+                break;
+                case 2:
+                    sort_type = SortType::BinaryInsertionSort;
+                break;
+                case 3:
+                    sort_type = SortType::HeapSort;
+                break;
+                case 4:
+                    sort_type = SortType::QuickSort;
+                break;
+                case 5:
+                    goto skip;
+                default:
+                    std::cout << "Niepoprawna opcja sortowania.\n";
+                goto skip;
+            }
 
+            Helper::sort(int_vec, float_vec, char_vec, sort_type, data_type);
+            Helper::print_vec<int>(int_vec);
+
+        skip:
             goto start;
             break;
         }
