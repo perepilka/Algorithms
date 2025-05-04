@@ -8,6 +8,7 @@
 std::vector<int> int_vec;
 std::vector<float> float_vec;
 std::vector<char> char_vec;
+DataType data_type;
 
 
 int main() {
@@ -37,7 +38,7 @@ start:
             std::cout << "Wybierz typ dannych do generacji: \n"
                     "1. int\n2. float\n3. char\n";
             std::cin >> x;
-            DataType data_type;
+
             switch (x) {
                 case 1:
                     data_type = DataType::INT;
@@ -140,6 +141,8 @@ start:
             // Sorter<char>::sort(char_vec, SortType::QuickSort);
             // Helper::print_vec<char>(char_vec);
 
+        sorting:
+
             std::cout << "Posortowac:\n"
                     "1. Insertion sort\n"
                     "2. Binary insertion sort\n"
@@ -213,8 +216,62 @@ start:
         }
 
         case 2: {
-            // Tutaj możesz dodać kod do wczytywania z pliku
-            std::cout << "Funkcja wczytywania z pliku nie jest jeszcze zaimplementowana.\n";
+            // data_type = DataType::INT;
+            //
+            // int_vec = DataGenerator::load<int>("../data/input/int/test.txt");
+            // Helper::print_vec(int_vec);
+
+
+            std::cout << "Jaki jest typ danych?\n"
+                    "1. int\n"
+                    "2. float\n"
+                    "3. char\n";
+            std::cin >> x;
+            switch (x) {
+                case 1: data_type = DataType::INT;
+                    break;
+                case 2: data_type = DataType::FLOAT;
+                    break;
+                case 3: data_type = DataType::CHAR;
+                    break;
+                default: std::cout << "Wybrany niepoprawny typ danych.\n";
+                    goto start;
+            }
+            std::string path;
+        filename:
+            std::cout << "Podaj nazwe pliku: ";
+            std::cin >> path;
+            switch (data_type) {
+                case DataType::INT:
+                    try {
+                        int_vec = DataGenerator::load<int>("../data/input/int/" + path);
+                    } catch (const std::runtime_error& e) {
+                        std::cout << "Pliku o nazwie: " << path << " nie istnieje! Sproboj ponownie!";
+                        goto filename;
+                    }
+                    break;
+                case DataType::FLOAT:
+                    try {
+                        float_vec = DataGenerator::load<float>("../data/input/float/" + path);
+                    } catch (const std::runtime_error& e) {
+                        std::cout << "Pliku o nazwie: " << path << " nie istnieje! Sproboj ponownie!";
+                        goto filename;
+                    }
+                    break;
+                case DataType::CHAR:
+                    try {
+                        char_vec = DataGenerator::load<char>("../data/input/char/" + path);
+                    } catch (const std::runtime_error& e) {
+                        std::cout << "Pliku o nazwie: " << path << " nie istnieje! Sproboj ponownie!";
+                        goto filename;
+                    }
+                    break;
+            }
+
+
+            goto sorting;
+
+
             goto start;
             break;
         }
