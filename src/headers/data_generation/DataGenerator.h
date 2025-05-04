@@ -95,7 +95,28 @@ class DataGenerator {
 
     }
     template <typename Type>
-    static std::vector<Type>  load(std::string fileName);
+    static std::vector<Type>  load(std::string path) {
+        std::ifstream file(path);
+        std::vector<Type> result;
+
+        if (!file.is_open()) {
+            throw std::runtime_error("Could not open file " + path);
+        }
+
+        int size;
+        file >> size;
+        for (int i = 0; i < size; ++i) {
+            int value;
+            file >> value;
+            result.push_back(value);
+        }
+
+        file.close();
+        return result;
+
+
+
+    }
 
 
 
