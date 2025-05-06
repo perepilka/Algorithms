@@ -22,7 +22,7 @@ enum class SortType {
 template<typename Type>
 class Sorter {
 public:
-    static void sort(std::vector<Type> &vec, SortType sortType) {
+    static void sort_menu(std::vector<Type> &vec, SortType sortType) {
         Timer timer;
         switch (sortType) {
             case SortType::InsertionSort:
@@ -55,6 +55,38 @@ public:
                 return;
         }
     }
+
+    static double sort(std::vector<Type> &vec, SortType sortType) {
+        Timer timer;
+        switch (sortType) {
+            case SortType::InsertionSort:
+
+                timer.timer_start();
+            InsertionSort::insertionSort(vec);
+            return timer.timer_stop() ;
+
+            break;
+            case SortType::BinaryInsertionSort:
+
+                timer.timer_start();
+            BinaryInsertionSort::binaryInsertionSort(vec);
+            return timer.timer_stop() ;
+            case SortType::QuickSort:
+                timer.timer_start();
+            QuickSort::quicksort(vec);
+            return timer.timer_stop() ;
+            break;
+            case SortType::HeapSort:
+                timer.timer_start();
+            HeapSort::heapSort(vec);
+            return timer.timer_stop() ;
+            default:
+                return 0.0;
+        }
+    }
+
+
+
 };
 
 

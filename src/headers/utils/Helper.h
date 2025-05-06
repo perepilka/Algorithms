@@ -6,8 +6,9 @@
 #define HELPER_H
 
 #include <vector>
-#include <filesystem>
 #include <sorters/Sorter.h>
+#include <fstream>
+#include <cstdlib>
 
 
 class Helper {
@@ -26,17 +27,44 @@ public:
                      data_type) {
         switch (data_type) {
             case DataType::INT:
-                Sorter<int>::sort(int_vec, sort_type);
+                Sorter<int>::sort_menu(int_vec, sort_type);
                 break;
             case DataType::FLOAT:
-                Sorter<float>::sort(float_vec, sort_type);
+                Sorter<float>::sort_menu(float_vec, sort_type);
                 break;
             case DataType::CHAR:
-                Sorter<char>::sort(char_vec, sort_type);
+                Sorter<char>::sort_menu(char_vec, sort_type);
                 break;
         }
     }
+
+
+    static void checkPath(const std::string &filepath) {
+        std::ofstream file(filepath);
+        if (!file.is_open()) {
+            std::cerr << "Nie udalo sie otworzyc plik '" << filepath << "'." << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        file.close();
+        std::remove(filepath.c_str());
+    }
+
+
+    static void saveRes(const std::string &filepath, double value) {
+        std::ofstream file(filepath);
+
+        file << value;
+        file.close();
+    }
+    static double calculateAverageResult(const std::vector<double>& vec) {
+        if (vec.empty()) return 0.0;
+
+        double sum = std::accumulate(vec.begin(), vec.end(), 0.0);
+        return sum / vec.size();
+    }
 };
+
+
 
 
 #endif //HELPER_H
