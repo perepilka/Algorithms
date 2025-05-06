@@ -11,6 +11,7 @@
 int main() {
     std::vector<int> vec;
     int times = 100;
+    std::vector<float> mss;
     ArrayTypes array_type = ArrayTypes::RANDOM;
     DataType data_type = DataType::INT;
     int number_of_elements = 1000;
