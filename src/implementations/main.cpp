@@ -4,8 +4,8 @@
 #include <../headers/data_generation/DataGenerator.h>
 #include <../headers/utils/Helper.h>
 
-template <typename Type>
-void makeTest(int times, std::vector<double>& mss, std::vector<Type>& vec, SortType sort_type, int number_of_elements, std::string path, ArrayTypes array_type) {
+
+void makeTest(int times, std::vector<double>& mss, std::vector<int>& vec, SortType sort_type, int number_of_elements, std::string path, ArrayTypes array_type) {
     mss.clear();
 
     Helper::checkPath(path);
@@ -13,6 +13,31 @@ void makeTest(int times, std::vector<double>& mss, std::vector<Type>& vec, SortT
     for (int i = 0; i < times; i++) {
         vec = DataGenerator::generate<int>(number_of_elements, array_type);
         mss.push_back(Sorter<int>::sort(vec, sort_type));
+    }
+    Helper::saveRes(path, Helper::calculateAverageResult(mss));
+
+}
+void makeTest(int times, std::vector<double>& mss, std::vector<float>& vec, SortType sort_type, int number_of_elements, std::string path, ArrayTypes array_type) {
+    mss.clear();
+
+    Helper::checkPath(path);
+
+    for (int i = 0; i < times; i++) {
+        vec = DataGenerator::generate<float>(number_of_elements, array_type);
+        mss.push_back(Sorter<float>::sort(vec, sort_type));
+    }
+    Helper::saveRes(path, Helper::calculateAverageResult(mss));
+
+}
+
+void makeTest(int times, std::vector<double>& mss, std::vector<char>& vec, SortType sort_type, int number_of_elements, std::string path, ArrayTypes array_type) {
+    mss.clear();
+
+    Helper::checkPath(path);
+
+    for (int i = 0; i < times; i++) {
+        vec = DataGenerator::generate<char>(number_of_elements, array_type);
+        mss.push_back(Sorter<char>::sort(vec, sort_type));
     }
     Helper::saveRes(path, Helper::calculateAverageResult(mss));
 
@@ -28,14 +53,15 @@ int main() {
     int number_of_elements = 1000;
     SortType sort_type = SortType::InsertionSort;
 
-    std::string path = "../data/1_etap";
-    makeTest(times, mss, vec, sort_type, 1000, path + "1etap_i_s_1000_int_100timesAVG.txt", array_type);
-    makeTest(times, mss, vec, sort_type, 5000, path + "1etap_i_s_5000_int_100timesAVG.txt", array_type);
-    makeTest(times, mss, vec, sort_type, 10000, path + "1etap_s_10000_int_100timesAVG.txt", array_type);
-    makeTest(times, mss, vec, sort_type, 50000, path + "1etap_i_s_50000_int_100timesAVG.txt", array_type);
-    makeTest(times, mss, vec, sort_type, 100000, path + "1etap_i_s_100000_int_100timesAVG.txt", array_type);
-    makeTest(times, mss, vec, sort_type, 150000, path + "1etap_i_s_150000_int_100timesAVG.txt", array_type);
-    makeTest(times, mss, vec, sort_type, 200000, path + "1etap_i_s_200000_int_100timesAVG.txt", array_type);
+
+ std::string path = "../data/1_etap/";
+ //    makeTest(times, mss, vec, sort_type, 1000, path + "1etap_i_s_1000_int_100timesAVG.txt", array_type);
+ //    makeTest(times, mss, vec, sort_type, 5000, path + "1etap_i_s_5000_int_100timesAVG.txt", array_type);
+ //    makeTest(times, mss, vec, sort_type, 10000, path + "1etap_i_s_10000_int_100timesAVG.txt", array_type);
+ //    makeTest(times, mss, vec, sort_type, 50000, path + "1etap_i_s_50000_int_100timesAVG.txt", array_type);
+ //    makeTest(times, mss, vec, sort_type, 100000, path + "1etap_i_s_100000_int_100timesAVG.txt", array_type);
+ //    makeTest(times, mss, vec, sort_type, 150000, path + "1etap_i_s_150000_int_100timesAVG.txt", array_type);
+ //    makeTest(times, mss, vec, sort_type, 200000, path + "1etap_i_s_200000_int_100timesAVG.txt", array_type);
 
     sort_type = SortType::BinaryInsertionSort;
     makeTest(times, mss, vec, sort_type, 1000, path + "1etap_b_i_s_1000_int_100timesAVG_random.txt", array_type);
@@ -63,7 +89,6 @@ int main() {
     makeTest(times, mss, vec, sort_type, 100000, path + "1etap_q_s_100000_int_100timesAVG_random.txt", array_type);
     makeTest(times, mss, vec, sort_type, 150000, path + "1etap_q_s_150000_int_100timesAVG_random.txt", array_type);
     makeTest(times, mss, vec, sort_type, 200000, path + "1etap_q_s_200000_int_100timesAVG_random.txt", array_type);
-
     path = "../data/2_etap/";
 //etap 2
     number_of_elements = 100000;
