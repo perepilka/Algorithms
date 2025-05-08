@@ -76,8 +76,8 @@ private:
             quicksort(vec, left, i - 1);
             quicksort(vec, i + 1, right);
         } else {
-            // insertionSort(vec, left, right);
-            InsertionSort::insertionSort(vec);
+             insertionSort(vec, left, right);
+            //InsertionSort::insertionSort(vec);
         }
     }
 
